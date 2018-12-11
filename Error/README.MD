@@ -1,7 +1,7 @@
 # Try to collect some error message and give some solutions!
 ## Can't find function
 Solution from: https://stackoverflow.com/questions/36958944/r-error-could-not-find-function-select/36958981#36958981
-load sos and use findFn to find this function
+load sos and use findFn to find this function (don't really know how to do this now 2018.12.12)
 ``` 
 library(dplyr)
 library(utils)
