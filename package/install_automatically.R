@@ -1,3 +1,4 @@
+# There are three different way but I have used the computer in Bristol it doen't work for these methods. For Bristol's computers, it might need more setting. For example, read the error messages and through these to install automatically by using if else loop.
 # I think the easiest one
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(package1, package2, package_n)
