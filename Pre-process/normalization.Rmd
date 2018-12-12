@@ -1,0 +1,4 @@
+From: https://www.rdocumentation.org/packages/BBmisc/versions/1.10/topics/normalize
+'''{r}
+normalize(kmeansdata, method = "standardize", range = c(0, 1), margin = 1L, on.constant = "quiet")
+'''
