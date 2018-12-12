@@ -1,0 +1,16 @@
+# From: https://zhuanlan.zhihu.com/p/30383865
+## assign(varname, variable) 
+## paste("str", i, sep ="") i is i in for loop
+```{r}
+for(i in 1:5){
+  variablename = paste("kmeans", i, sep = "_")
+  columnname = paste("is_kmeans", i, sep = "_")
+  assign(variablename, connection_events[connection_events$columnname==1])
+}
+# The same as the code below:
+kmeans_1 <- connection_events[connection_events$is_kmeans_1==1]
+kmeans_2 <- connection_events[connection_events$is_kmeans_2==1]
+kmeans_3 <- connection_events[connection_events$is_kmeans_3==1]
+kmeans_4 <- connection_events[connection_events$is_kmeans_4==1]
+kmeans_5 <- connection_events[connection_events$is_kmeans_5==1]
+```
