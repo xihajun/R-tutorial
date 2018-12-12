@@ -1,3 +1,15 @@
+# The perfect answer is from: https://stackoverflow.com/questions/26979490/how-to-add-column-with-a-variable-name-in-a-data-frame-in-a-loop-in-r
+```{r}
+for (i in 1:nrow(b){
+  dataframe[[paste0("YourString",i)]]<-dataframe1[i,2]
+}
+# in my project
+for(i in 1:5){
+  connection_events[[paste0("is_kmeans",i)]]<- as.integer(irisCluster$`cluster`==i)
+}
+
+```
+
 # From: https://zhuanlan.zhihu.com/p/30383865
 ## assign(varname, variable) 
 ## paste("str", i, sep ="") i is i in for loop
