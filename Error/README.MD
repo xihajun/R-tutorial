@@ -15,5 +15,10 @@ findFn("starts_with")
 You need to install or load the package `magrittr`
 ### Error: could not find function "select"
 You need to install or load the package `dplyr`
+### Error: could not find function "get.var.ncdf"
+
+
+			
+
 
 
