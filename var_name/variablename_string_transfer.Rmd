@@ -14,3 +14,24 @@ kmeans_3 <- connection_events[connection_events$is_kmeans_3==1]
 kmeans_4 <- connection_events[connection_events$is_kmeans_4==1]
 kmeans_5 <- connection_events[connection_events$is_kmeans_5==1]
 ```
+# eval usage but not recommend
+## From: https://stackoverflow.com/questions/30083351/variable-as-a-column-name-in-data-frame
+# eval(parse(text=paste0(' the code you what to impliment')))
+```{r}
+
+for(i in 1:5){
+  subname = paste("connection_events$is_kmeans", i, sep = "_")
+  eval(parse(text=paste0(subname, ' <- as.integer(irisCluster$`cluster`==1)')))
+}
+connection_events
+```
+
+# this is failed
+```{r}
+for(i in 1:5){
+  variablename = paste("is_kmeans", i, sep = "_")
+  subname = paste("connection_events$is_kmeans", i, sep = "_")
+  print(subname)
+  assign(subname, as.integer(irisCluster$`cluster`==i))
+}
+```
