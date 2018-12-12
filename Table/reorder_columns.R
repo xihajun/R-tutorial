@@ -1,3 +1,8 @@
+# This is the best [the number in the c() is the ture order]
+connection_events<-connection_events[,c(1:42,44:46, 43)]
+
+
+# this below is not that good for my problems
 # from: https://stackoverflow.com/questions/5620885/how-does-one-reorder-columns-in-a-data-frame
 table <- data.frame(Time=c(1,2), In=c(2,3), Out=c(3,4), Files=c(4,5))
 table
