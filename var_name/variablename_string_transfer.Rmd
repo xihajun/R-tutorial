@@ -1,3 +1,10 @@
+# 我的问题是：变量名是xxx1,xxx2,xxx3这样，如何循环赋值，不用都打出来。
+解决方案有好几个：
+1. eval 像matlab eval差不多的用法，但是需要加点东西，具体可以看下面的代码
+2. assign combined with paste
+3. 给data.table赋值变量名的时候 tablename[[ 里面使用paste0 的技巧即可 ]] （不知道如果里面是变量行不行，答案是可以）
+
+
 # The perfect answer is from: https://stackoverflow.com/questions/26979490/how-to-add-column-with-a-variable-name-in-a-data-frame-in-a-loop-in-r
 ```{r}
 for (i in 1:nrow(b){
@@ -7,7 +14,11 @@ for (i in 1:nrow(b){
 for(i in 1:5){
   connection_events[[paste0("is_kmeans",i)]]<- as.integer(irisCluster$`cluster`==i)
 }
-
+# or you can use
+for(i in 1:5){
+  name = paste0("is_kmeans",i+10)
+  connection_events[[name]]<- as.integer(irisCluster$`cluster`==i)
+}
 ```
 
 # From: https://zhuanlan.zhihu.com/p/30383865
