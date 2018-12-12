@@ -1,0 +1,164 @@
+---
+title: "Kmeans"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(caret, data.table, ggplot2, ranger, magrittr, dplyr, BBmisc, ncdf)#ncdf is unsolved
+```
+
+## load the data for a few seconds
+
+
+```{r}
+columns <- read.table(
+    "./data/kddcup.names",
+    sep=":",
+    skip=1,  # the first column name are the labels, but those are at the end!
+    as.is=T
+)
+column_names <- c(columns[,1], 'label')
+
+connection_events <- read.csv(
+    "./data/kddcup.data_10_percent.gz",
+    col.names=column_names
+)
+
+setDT(connection_events)  # convert from data.frame to data.table
+```
+
+## select the data from connection_events
+
+Try to use kmeans
+1. learn how to select columns except the label
+
+This code is changing discrete strings into number
+```{r}
+connection_events$protocol_type <- as.integer(factor(connection_events$protocol_type))
+connection_events$service <- as.integer(factor(connection_events$service))
+connection_events$flag <- as.integer(factor(connection_events$flag))
+kmeansdata <- connection_events[,1:41]
+```
+
+## it should be 5 catogries and forget normalization **Try kmeans 4 classifications
+
+
+```{r kmeans, echo=FALSE}
+set.seed(20)
+kmeansdata <- normalize(kmeansdata, method = "standardize", range = c(0, 1), margin = 1L, on.constant = "quiet")
+irisCluster <- kmeans(kmeansdata, 5, nstart = 20)
+
+```
+
+irisCluster returns cluster, centers, totss and so on.
+
+## add new feature: is_kmeans_1, is_kmeans_2, is_kmeans_3, is_kmeans_4
+
+```{r}
+
+col.name = "a"
+df <- data.frame(placeholder_name =  as.integer(irisCluster$`cluster`==i))
+names(df)[names(df) == "placeholder_name"] <- col.name
+assign(col.name, "col1")
+assign(paste(col.name), 1:4)
+
+df <- data.frame(mget(col.name))
+
+```
+
+
+## Variable as a column name in data frame 
+
+```{r}
+for(i in 1:5){
+  variablename = paste("is_kmeans", i, sep = "_")
+  
+  subname = paste("connection_events$is_kmeans", i, sep = "_")
+  print(subname)
+  assign(subname, as.integer(irisCluster$`cluster`==i))
+}
+for(i in 1:5){
+  subname = paste("connection_events$is_kmeans", i, sep = "_")
+  eval(parse(text=paste0(subname, ' <- as.integer(irisCluster$`cluster`==1)')))
+}
+for(i in 1:5){
+  name = paste0("is_kmeans",i+10)
+  connection_events[[name]]<- as.integer(irisCluster$`cluster`==i)
+}
+
+connection_events
+connection_events$is_kmeans_1 <- as.integer(irisCluster$`cluster`==1)
+connection_events$is_kmeans_2 <- as.integer(irisCluster$`cluster`==2)
+connection_events$is_kmeans_3 <- as.integer(irisCluster$`cluster`==3)
+connection_events$is_kmeans_4 <- as.integer(irisCluster$`cluster`==4)
+connection_events$is_kmeans_5 <- as.integer(irisCluster$`cluster`==5)
+connection_events<-connection_events[,c(1:47)]
+connection_events
+```
+## Try to change the order for the columns which is not prefect order for me as is_kmeans_4 is 43th.
+This function below could reorder any column to the first column!
+Here is how it works:
+
+```{r}
+new_df <- connection_events %>% select(label, everything())
+new_df
+```
+It solves my problems!
+Thanks to https://stackoverflow.com/questions/22286419/move-column-to-first-in-a-data-frame
+
+```{r}
+connection_events<-connection_events[,c(1:42,44:46, 43)]
+connection_events
+saveRDS(connection_events, file='./data/adding-kmeans-features.rds')
+
+```
+
+```{r}
+for(i in 1:5){
+  variablename = paste("kmeans", i, sep = "_")
+  columnname = paste("is_kmeans", i, sep = "_")
+  assign(variablename, connection_events[connection_events$columnname==1])
+}
+
+kmeans_1 <- connection_events[connection_events$is_kmeans_1==1]
+kmeans_2 <- connection_events[connection_events$is_kmeans_2==1]
+kmeans_2[kmeans_2$label!="smurf."]
+kmeans_3 <- connection_events[connection_events$is_kmeans_3==1]
+kmeans_4 <- connection_events[connection_events$is_kmeans_4==1]
+kmeans_5 <- connection_events[connection_events$is_kmeans_5==1]
+kmeans_5
+
+```
+
+```{r}
+connection_events <- connection_events[,c('duration','src_bytes','dst_bytes','num_compromised','num_root','count','srv_count','dst_host_count','dst_host_srv_count','label')]
+set.seed(20)
+kCluster <- kmeans(connection_events[,1:8], 10, nstart = 1)
+kCluster$`cluster`
+for (i in 1:10){
+  connection_events$is_kmeans_1 <- as.integer(kCluster$`cluster`==1)
+  connection_events$is_kmeans_2 <- as.integer(kCluster$`cluster`==2)
+  connection_events$is_kmeans_3 <- as.integer(kCluster$`cluster`==3)
+  connection_events$is_kmeans_4 <- as.integer(kCluster$`cluster`==4)
+  kmeans_1 <- connection_events[connection_events$is_kmeans_1==1]
+  kmeans_2 <- connection_events[connection_events$is_kmeans_2==1]
+  kmeans_3 <- connection_events[connection_events$is_kmeans_3==1]
+  kmeans_4 <- connection_events[connection_events$is_kmeans_4==1]
+}
+
+
+```
+
+```{r}
+install.packages('BiocManager')
+install.packages("ncdf")
+library(ncdf)
+total <- 0
+for (i in 1:50) {
+  assign(paste("data", i, sep = ""), get.var.ncdf(nc, varid = nc$var[[i]]))
+  total <- total + get(paste("data", i, sep = ""))
+}
+
+```
+
