@@ -1,0 +1,2 @@
+names(tablename)
+colnames(tablename)
