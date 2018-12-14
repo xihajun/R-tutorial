@@ -1,0 +1,12 @@
+Find the row number of some row data == "xx"
+```{r}
+which(connection_events$label == name)
+# is.na is function finding NA
+which(is.na(connection_events$na))
+```
+
+Change TRUE and FALSE to 1 and 0
+```{r}
+ans = TRUE+0
+ans = FALSE+0
+```
