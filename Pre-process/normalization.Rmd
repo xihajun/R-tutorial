@@ -4,9 +4,9 @@ Package: https://www.rdocumentation.org/packages/BBmisc/versions/1.10
 library(BBmisc)
 kmeansdata <- normalize(kmeansdata, method = "standardize", range = c(0, 1), margin = 1L, on.constant = "quiet")
 '''
-As I didn't read the tutorial of BBmisc, so this is better!
+As I didn't read the tutorial of BBmisc, this is maxmin normalization
 '''{r}
-normalize1 <- function(newdataf, dataf){
+maxminnormal <- function(newdataf, dataf){
   normalizeddataf <- newdataf 
   for (n in names(newdataf)){
     if((max(dataf[[n]]) -  min(dataf[[n]]))) normalizeddataf[[n]] <- rep(0,nrow(newdataf))
@@ -15,8 +15,10 @@ normalize1 <- function(newdataf, dataf){
      } 
   return(normalizeddataf)
 }
-sample_events[,1:41] <- normalize1(sample_events[,1:41],sample_events[,1:41])
+
+sample_events[,1:41] <- maxminnormal(sample_events[,1:41],sample_events[,1:41])
 sample_events<- replace(sample_events, is.na(sample_events), 0)
 
 '''
 From:https://stats.stackexchange.com/questions/243819/normalize-function-for-train-test-and-validation-sets
+
