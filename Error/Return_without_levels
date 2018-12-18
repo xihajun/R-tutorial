@@ -1,0 +1,2 @@
+# From: https://stackoverflow.com/questions/31055564/removing-the-levels-attribute-in-the-output-r
+as.character(type$V2[1])
