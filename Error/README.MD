@@ -12,9 +12,7 @@ findFn("starts_with")
 # which gives only 14 hits in 9 packages, the first one of which leads to dplyr::select.
 ```
 ### Error: could not find function "%>%"
-You need to install or load the package `magrittr`
-Or 
-require(dplyr)
+You need to install or load the package `magrittr` or `require(dplyr)`
 ### Error: could not find function "select"
 You need to install or load the package `dplyr`
 ### Error: could not find function "get.var.ncdf"
