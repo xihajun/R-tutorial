@@ -13,6 +13,8 @@ findFn("starts_with")
 ```
 ### Error: could not find function "%>%"
 You need to install or load the package `magrittr`
+Or 
+require(dplyr)
 ### Error: could not find function "select"
 You need to install or load the package `dplyr`
 ### Error: could not find function "get.var.ncdf"
