@@ -17,8 +17,8 @@ You need to install or load the package `magrittr` or `require(dplyr)`
 You need to install or load the package `dplyr`
 ### Error: could not find function "get.var.ncdf"
 
-
-			
-
+## Rstudio server
+### webserver: cannot stop or restart
+You might use sudo to restart or stop
 
 
