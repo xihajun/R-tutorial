@@ -5,7 +5,7 @@
 3. 给data.table赋值变量名的时候 tablename[[ 里面使用paste0 的技巧即可 ]] （不知道如果里面是变量行不行，答案是可以）
 
 
-# The perfect answer is from: https://stackoverflow.com/questions/26979490/how-to-add-column-with-a-variable-name-in-a-data-frame-in-a-loop-in-r
+# The perfect answer is from: [stackoverflow](https://stackoverflow.com/questions/26979490/how-to-add-column-with-a-variable-name-in-a-data-frame-in-a-loop-in-r)
 ```{r}
 for (i in 1:nrow(b){
   dataframe[[paste0("YourString",i)]]<-dataframe1[i,2]
@@ -21,7 +21,7 @@ for(i in 1:5){
 }
 ```
 
-# From: https://zhuanlan.zhihu.com/p/30383865
+# From: [zhihu](https://zhuanlan.zhihu.com/p/30383865)
 ## assign(varname, variable) 
 ## paste("str", i, sep ="") i is i in for loop
 ```{r}
@@ -38,7 +38,7 @@ kmeans_4 <- connection_events[connection_events$is_kmeans_4==1]
 kmeans_5 <- connection_events[connection_events$is_kmeans_5==1]
 ```
 # eval usage but not recommend
-## From: https://stackoverflow.com/questions/30083351/variable-as-a-column-name-in-data-frame
+## From: [stackoverflow](https://stackoverflow.com/questions/30083351/variable-as-a-column-name-in-data-frame)
 # eval(parse(text=paste0(' the code you what to impliment')))
 ```{r}
 for(i in 1:5){
